@@ -1,5 +1,5 @@
 resource "databricks_sql_query" "q_ins_fraud_by_severity" {
-  data_source_id = "48dfdc3c-dd99-4578-a146-d7eaadc38c75"
+  data_source_id = var.datasource_id
   name           = "Insurance Fraud by severity"
   query          = <<-EOT
     SELECT
@@ -15,8 +15,16 @@ resource "databricks_sql_query" "q_ins_fraud_by_severity" {
   run_as_role    = "viewer"
 }
 
+resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_table" {
+  query_id    = databricks_sql_query.q_ins_fraud_by_severity.id
+  type        = "TABLE"
+  name        = "Table"
+  description = ""
+  options = jsonencode({})
+}
+
 resource "databricks_sql_query" "q_ins_fraud_fitted" {
-  data_source_id = "48dfdc3c-dd99-4578-a146-d7eaadc38c75"
+  data_source_id = var.datasource_id
   name           = "Insurance Fraud fitted"
   query          = <<-EOT
     SELECT
@@ -32,8 +40,16 @@ resource "databricks_sql_query" "q_ins_fraud_fitted" {
   run_as_role    = "viewer"
 }
 
+resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_table" {
+  query_id    = databricks_sql_query.q_ins_fraud_fitted.id
+  type        = "TABLE"
+  name        = "Table"
+  description = ""
+  options = jsonencode({})
+}
+
 resource "databricks_sql_query" "q_ins_fraud_percent" {
-  data_source_id = "48dfdc3c-dd99-4578-a146-d7eaadc38c75"
+  data_source_id = var.datasource_id
   name           = "Insurance Fraud percent"
   query          = <<-EOT
     SELECT
@@ -46,8 +62,16 @@ resource "databricks_sql_query" "q_ins_fraud_percent" {
   run_as_role    = "viewer"
 }
 
+resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_table" {
+  query_id    = databricks_sql_query.q_ins_fraud_percent.id
+  type        = "TABLE"
+  name        = "Table"
+  description = ""
+  options = jsonencode({})
+}
+
 resource "databricks_sql_query" "q_ins_fraud_hobbies" {
-  data_source_id = "48dfdc3c-dd99-4578-a146-d7eaadc38c75"
+  data_source_id = var.datasource_id
   name           = "Insurance Fraud by hobbies"
   query          = <<-EOT
     SELECT
@@ -61,4 +85,12 @@ resource "databricks_sql_query" "q_ins_fraud_hobbies" {
     GROUP BY insured_hobbies
   EOT
   run_as_role    = "viewer"
+}
+
+resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_table" {
+  query_id    = databricks_sql_query.q_ins_fraud_hobbies.id
+  type        = "TABLE"
+  name        = "Table"
+  description = ""
+  options = jsonencode({})
 }

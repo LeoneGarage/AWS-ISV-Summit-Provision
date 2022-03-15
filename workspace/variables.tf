@@ -1,3 +1,7 @@
+variable "databricks_account_name" {
+  default = ""
+}
+
 variable "workspace_host" {
   default = ""
 }

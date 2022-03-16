@@ -1,6 +1,3 @@
-data "databricks_current_user" "me" {
-}
-
 # resource "databricks_notebook" "test" {
 #   content_base64 = base64encode(<<-EOT
 # # Databricks notebook source

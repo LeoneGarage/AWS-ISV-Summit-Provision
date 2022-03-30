@@ -11,9 +11,10 @@ data "databricks_spark_version" "ml" {
 }
 
 resource "databricks_cluster" "interactive_cluster" {
-  cluster_name            = "aws-isv-summit"
+  for_each = databricks_group.isv_summit_group
+  cluster_name            = each.value.display_name
   spark_version           = data.databricks_spark_version.ml.id
-  node_type_id            = "i3.xlarge"#data.databricks_node_type.interactive_node.id
+  node_type_id            = "i3.xlarge"
   driver_node_type_id     = "c4.4xlarge"
   autotermination_minutes = 30
   autoscale {
@@ -21,12 +22,14 @@ resource "databricks_cluster" "interactive_cluster" {
     max_workers = 8
   }
   spark_conf = {
-    "spark.databricks.hive.metastore.glueCatalog.enabled" : true
+    "spark.databricks.repl.allowedLanguages": "python,sql"
+    "spark.databricks.cluster.profile": "serverless"
   }
+
   spark_env_vars = {
       "PYSPARK_PYTHON" : "/databricks/python3/bin/python3"
   }
-  custom_tags = var.tags
+  custom_tags = merge({"ResourceClass": "Serverless"}, var.tags)
 
   aws_attributes {
     first_on_demand = 1
@@ -36,7 +39,15 @@ resource "databricks_cluster" "interactive_cluster" {
     ebs_volume_type = "GENERAL_PURPOSE_SSD"
     ebs_volume_count = 3
     ebs_volume_size = 100
-    instance_profile_arn = "arn:aws:iam::997819012307:instance-profile/psa-glue-role"
-#        instance_profile_arn           = databricks_instance_profile.initial.instance_profile_arn
+  }
+}
+
+resource "databricks_permissions" "cluster_usage" {
+  for_each = databricks_cluster.interactive_cluster
+  cluster_id = each.value.cluster_id
+
+  access_control {
+    group_name       = each.value.cluster_name
+    permission_level = "CAN_RESTART"
   }
 }

@@ -3,7 +3,8 @@ locals {
 }
 
 resource "databricks_job" "job_pipeline" {
-  name = "${data.databricks_current_user.me.user_name}_InsurancePipeline"
+  for_each = databricks_user.users
+  name = "${each.value.user_name}_InsurancePipeline"
 
   job_cluster {
     job_cluster_key = local.job_cluster_key
@@ -31,7 +32,6 @@ resource "databricks_job" "job_pipeline" {
             ebs_volume_type = "GENERAL_PURPOSE_SSD"
             ebs_volume_count = 3
             ebs_volume_size = 100
-            instance_profile_arn = "arn:aws:iam::997819012307:instance-profile/psa-glue-role"
         }
     }
   }
@@ -41,7 +41,7 @@ resource "databricks_job" "job_pipeline" {
     job_cluster_key = local.job_cluster_key
 
     notebook_task {
-      notebook_path = "${databricks_repo.insurance_fraud_repo.path}/Initialize"
+      notebook_path = "/Repos/${each.value.user_name}/AWS-ISV-Summit/Initialize"
       base_parameters = {
           triggerOnce: "false"
       }
@@ -56,7 +56,7 @@ resource "databricks_job" "job_pipeline" {
       task_key = "Initialize"
     }
     notebook_task {
-      notebook_path = "${databricks_repo.insurance_fraud_repo.path}/ingestion/00_etl_streaming_bronze"
+      notebook_path = "/Repos/${each.value.user_name}/AWS-ISV-Summit/ingestion/00_etl_streaming_bronze"
       base_parameters = {
           triggerOnce: "false"
       }
@@ -71,7 +71,7 @@ resource "databricks_job" "job_pipeline" {
       task_key = "Initialize"
     }
     notebook_task {
-      notebook_path = "${databricks_repo.insurance_fraud_repo.path}/ingestion/10_etl_streaming_silver"
+      notebook_path = "/Repos/${each.value.user_name}/AWS-ISV-Summit/ingestion/10_etl_streaming_silver"
       base_parameters = {
           triggerOnce: "false"
       }
@@ -86,7 +86,7 @@ resource "databricks_job" "job_pipeline" {
       task_key = "Initialize"
     }
     notebook_task {
-      notebook_path = "${databricks_repo.insurance_fraud_repo.path}/features/20_features"
+      notebook_path = "/Repos/${each.value.user_name}/AWS-ISV-Summit/features/20_features"
       base_parameters = {
           triggerOnce: "false"
       }
@@ -101,10 +101,20 @@ resource "databricks_job" "job_pipeline" {
       task_key = "Initialize"
     }
     notebook_task {
-      notebook_path = "${databricks_repo.insurance_fraud_repo.path}/inference/40_inference"
+      notebook_path = "/Repos/${each.value.user_name}/AWS-ISV-Summit/inference/40_inference"
       base_parameters = {
           triggerOnce: "false"
       }
     }
+  }
+}
+
+resource "databricks_permissions" "job_usage" {
+  for_each = databricks_job.job_pipeline
+  job_id = each.value.id
+
+  access_control {
+    user_name       = trimsuffix(each.value.name, "_InsurancePipeline")
+    permission_level = "CAN_MANAGE"
   }
 }

@@ -56,7 +56,7 @@ terraform -chdir=$DIR/workspace init
 workspace_create_if_not_exists $DIR/workspace $ACCOUNT_NAME $WORKSPACE_NAME
 workspace_select "$DIR/workspace" $ACCOUNT_NAME $WORKSPACE_NAME
 if [ -n "$PLAN" ] && [ "$PLAN" = "true" ]; then
-  terraform -chdir=$DIR/workspace plan -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME"
+  terraform -chdir=$DIR/workspace plan -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
 else
   if [ -n "$IMPORT" ] && [ "$IMPORT" = "true" ]; then
     terraform -chdir=$DIR/workspace import -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@

@@ -1,10 +1,23 @@
 resource "databricks_sql_dashboard" "d_ins_fraud" {
-  name = "Insurance Fraud"
+  for_each = { for u in databricks_user.users: u.user_name => u }
+  name = "${each.value.user_name} Insurance Fraud"
+}
+
+resource "databricks_permissions" "d_ins_fraud_permission" {
+  for_each = databricks_sql_dashboard.d_ins_fraud
+  sql_dashboard_id = each.value.id
+
+  // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
+  access_control {
+    user_name       = each.key
+    permission_level = "CAN_RUN"
+  }
 }
 
 resource "databricks_sql_widget" "d1w1" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_fraud_pie.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_fraud_pie[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -17,8 +30,9 @@ resource "databricks_sql_widget" "d1w1" {
 }
 
 resource "databricks_sql_widget" "d1w2" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_claim_amount.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_claim_amount[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -31,8 +45,9 @@ resource "databricks_sql_widget" "d1w2" {
 }
 
 resource "databricks_sql_widget" "d1w3" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_weekend.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_hobbies_viz_weekend[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -45,8 +60,9 @@ resource "databricks_sql_widget" "d1w3" {
 }
 
 resource "databricks_sql_widget" "d1w4" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_percent_viz_fraud.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_percent_viz_fraud[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -59,8 +75,9 @@ resource "databricks_sql_widget" "d1w4" {
 }
 
 resource "databricks_sql_widget" "d1w5" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_pie.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_pie[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -73,8 +90,9 @@ resource "databricks_sql_widget" "d1w5" {
 }
 
 resource "databricks_sql_widget" "d1w6" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_severity_by_hobbies.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_severity_by_hobbies[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -87,8 +105,9 @@ resource "databricks_sql_widget" "d1w6" {
 }
 
 resource "databricks_sql_widget" "d1w7" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_weekend_fraud.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_by_severity_viz_weekend_fraud[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {
@@ -101,8 +120,9 @@ resource "databricks_sql_widget" "d1w7" {
 }
 
 resource "databricks_sql_widget" "d1w8" {
-  dashboard_id = databricks_sql_dashboard.d_ins_fraud.id
-  visualization_id = databricks_sql_visualization.q_ins_fraud_fitted_viz_fraud_reported.id
+  for_each = databricks_user.users
+  dashboard_id = databricks_sql_dashboard.d_ins_fraud[each.value.user_name].id
+  visualization_id = databricks_sql_visualization.q_ins_fraud_fitted_viz_fraud_reported[each.value.user_name].id
   title = "Chart - Insurance Fraud by hobbies"
 
   position {

@@ -6,7 +6,7 @@ resource "databricks_group" "isv_summit" {
 }
 
 resource "databricks_group" "isv_summit_group" {
-  for_each = { for u in range(0, floor(length(local.users) / 10) + (length(local.users) % 10)==0 ? 0 : 1) : u => u }
+  for_each = { for u in range(0, ceil(length(local.users) / 10)) : u => u }
   display_name               = "isv_summit_${each.key + 1}"
   allow_cluster_create       = false
   allow_instance_pool_create = false
@@ -14,15 +14,15 @@ resource "databricks_group" "isv_summit_group" {
 }
 
 resource "databricks_user" "users" {
-  for_each = { for u in range(0, length(local.users)) : u => u }
-  user_name = local.users[each.key].uid
-  display_name = local.users[each.key].name
+  for_each = { for u in local.users : u.uid => u }
+  user_name = each.value.uid
+  display_name = each.value.name
 }
 
 resource "databricks_group_member" "isv_summit_members" {
-  for_each = { for u in range(0, length(databricks_user.users)) : u => tonumber(u) }
-  group_id  = databricks_group.isv_summit_group[floor(each.value / 10)].id
-  member_id = databricks_user.users[each.value].id
+  for_each = { for u in range(0, length(databricks_user.users)) : u => element(values(databricks_user.users), u) }
+  group_id  = databricks_group.isv_summit_group[floor(each.key / 10)].id
+  member_id = each.value.id
 }
 
 resource "databricks_group_member" "isv_summit_member_groups" {

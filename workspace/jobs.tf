@@ -14,14 +14,12 @@ resource "databricks_job" "job_pipeline" {
             min_workers = 2
             max_workers = 8
         }
-        spark_conf = {
-            "spark.databricks.hive.metastore.glueCatalog.enabled" : true
-        }
         spark_env_vars = {
             "PYSPARK_PYTHON" : "/databricks/python3/bin/python3"
         }
         custom_tags = var.tags
         spark_version = data.databricks_spark_version.ml.id
+        policy_id   = databricks_cluster_policy.isv_summit.id
         node_type_id  = "i3.xlarge"#data.databricks_node_type.smallest.id
         driver_node_type_id = "c4.4xlarge"
         aws_attributes {
@@ -115,6 +113,6 @@ resource "databricks_permissions" "job_usage" {
 
   access_control {
     user_name       = trimsuffix(each.value.name, "_InsurancePipeline")
-    permission_level = "CAN_MANAGE"
+    permission_level = "IS_OWNER"
   }
 }

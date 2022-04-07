@@ -51,4 +51,4 @@ if [ -n "$USERS_PATH" ]; then
   USERS_PATH="$(cd "$(dirname "$USERS_PATH")"; pwd)/$(basename "$USERS_PATH")"
 fi
 
-workspace_destroy "$DIR/workspace" $ACCOUNT_NAME "$WORKSPACE_NAME" true -var="users_filepath=$USERS_PATH"
+workspace_destroy "$DIR/workspace" $ACCOUNT_NAME "$WORKSPACE_NAME" true -var="users_filepath=$USERS_PATH" -var-file=$VARFILE

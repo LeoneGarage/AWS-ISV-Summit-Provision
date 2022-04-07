@@ -2,6 +2,10 @@ locals {
   user_dbs = { for u in databricks_user.users: u.user_name => replace(replace(replace(split("@", u.user_name)[0], ".", "_"), "-", "_"), "+", "_")}
 }
 
+data "databricks_group" "admins" {
+  display_name = "admins"
+}
+
 resource "databricks_sql_query" "q_ins_fraud_by_severity" {
   for_each = local.user_dbs
   data_source_id = databricks_sql_endpoint.isv_summit.data_source_id

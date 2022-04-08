@@ -57,7 +57,10 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
             },
             "1": {
                 "name": "Fraud Predicted"
-            }
+            },
+            "fraud_predicted": {
+                            "name": "Fraud Predicted"
+                        }
         },
         "valuesOptions": {},
         "direction": {
@@ -489,7 +492,10 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
                     },
                     "1": {
                         "name": "Fraud Predicted"
-                    }
+                    },
+                    "hobbies_count": {
+                            "name": "Hobby Fraud ratios"
+                        }
                 },
                 "valuesOptions": {},
                 "direction": {

@@ -21,14 +21,14 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
                 "enabled": true
             },
             "title": {
-                "text": "incident_severity"
+                "text": "Incident Severity"
             }
         },
         "yAxis": [
             {
                 "type": "linear",
                 "title": {
-                    "text": "fraud_predicted"
+                    "text": "Fraud Predicted"
                 }
             },
             {
@@ -111,21 +111,21 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_weekend_fra
                         "enabled": true
                     },
                     "title": {
-                        "text": "insured_hobbies"
+                        "text": "Insured Hobbies"
                     }
                 },
                 "yAxis": [
                     {
                         "type": "linear",
                         "title": {
-                            "text": "fraud_incident_weekend_flag"
+                            "text": "Fraud Weekend Incident"
                         }
                     },
                     {
                         "type": "linear",
                         "opposite": true,
                         "title": {
-                            "text": "valid_incident_weekend_flag"
+                            "text": "Valid Weekend Incident"
                         }
                     }
                 ],
@@ -199,7 +199,7 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_severity_by
                     {
                         "type": "linear",
                         "title": {
-                            "text": "fraud_predicted"
+                            "text": "Fraud Predicted"
                         }
                     },
                     {
@@ -453,14 +453,14 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
                         "enabled": true
                     },
                     "title": {
-                        "text": "insured_hobbies"
+                        "text": "Insured Hobbies"
                     }
                 },
                 "yAxis": [
                     {
                         "type": "linear",
                         "title": {
-                            "text": "hobbies_count"
+                            "text": "Hobbies Count"
                         }
                     },
                     {
@@ -549,14 +549,14 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_claim_amount" {
                     {
                         "type": "linear",
                         "title": {
-                            "text": "total_fraud_claim_amount"
+                            "text": "Total Fraud Claim Amount"
                         }
                     },
                     {
                         "type": "linear",
                         "opposite": true,
                         "title": {
-                            "text": "total_valid_claim_amount"
+                            "text": "Total Valid Claim Amount"
                         }
                     }
                 ],
@@ -630,14 +630,14 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_weekend" {
                         "enabled": true
                     },
                     "title": {
-                        "text": "insured_hobbies"
+                        "text": "Insured Hobbies"
                     }
                 },
                 "yAxis": [
                     {
                         "type": "linear",
                         "title": {
-                            "text": "incident_weekend_flag"
+                            "text": "Weekend Incident"
                         }
                     },
                     {

@@ -35,8 +35,8 @@ while [[ $# -gt 0 ]]; do
       shift # past value
       ;;
     *)    # unknown option
-      echo "Unknown option $1"
-      exit 1
+#      echo "Unknown option $1"
+#      exit 1
       POSITIONAL+=("$1") # save it in an array for later
       shift # past argument
       ;;
@@ -51,4 +51,4 @@ if [ -n "$USERS_PATH" ]; then
   USERS_PATH="$(cd "$(dirname "$USERS_PATH")"; pwd)/$(basename "$USERS_PATH")"
 fi
 
-workspace_destroy "$DIR/workspace" $ACCOUNT_NAME "$WORKSPACE_NAME" true -var="users_filepath=$USERS_PATH" -var-file=$VARFILE
+workspace_destroy "$DIR/workspace" $ACCOUNT_NAME "$WORKSPACE_NAME" true -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@

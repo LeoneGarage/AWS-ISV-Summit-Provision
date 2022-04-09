@@ -32,3 +32,22 @@ resource "databricks_permissions" "isv_summit_policy_permission" {
     permission_level = "CAN_USE"
   }
 }
+
+resource "databricks_cluster_policy" "isv_summit_dlt" {
+  name       = "ISV Summit DLT cluster policy"
+  definition = jsonencode({
+    "cluster_type": {
+        "type": "fixed",
+        "value": "dlt"
+    }
+    })
+}
+
+resource "databricks_permissions" "isv_summit_dlt_policy_permission" {
+  cluster_policy_id = databricks_cluster_policy.isv_summit_dlt.id
+
+  access_control {
+    group_name       = databricks_group.isv_summit.display_name
+    permission_level = "CAN_USE"
+  }
+}

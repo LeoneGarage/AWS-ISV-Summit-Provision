@@ -1,7 +1,3 @@
-locals {
-  user_dbs = { for u in databricks_user.users: u.user_name => "${replace(replace(replace(split("@", u.user_name)[0], ".", "_"), "-", "_"), "+", "_")}_db"}
-}
-
 data "databricks_group" "admins" {
   display_name = "admins"
 }
@@ -18,7 +14,7 @@ resource "databricks_sql_query" "q_ins_fraud_by_severity" {
         sum(case when prediction=1 then total_claim_amount else 0 end) as total_claim_amount,
         sum(case when prediction=1 then incident_weekend_flag else 0 end) as fraud_incident_weekend_flag,
         sum(case when prediction=0 then incident_weekend_flag else 0 end) as valid_incident_weekend_flag
-    FROM ${each.value}.insurance_claims_gold
+    FROM ${each.value.db_name}.insurance_claims_gold
     GROUP BY insured_hobbies, incident_severity
   EOT
   run_as_role    = "viewer"
@@ -52,8 +48,8 @@ resource "databricks_sql_query" "q_ins_fraud_fitted" {
     SELECT
         CASE WHEN fraud_reported=1 THEN 'Yes' ELSE 'No' END as fraud_reported,
         count(*) as count
-    FROM ${each.value}.insurance_claims_features a
-    JOIN ${each.value}.insurance_claims_response b ON a.policy_number = b.policy_number
+    FROM ${each.value.db_name}.insurance_claims_features a
+    JOIN ${each.value.db_name}.insurance_claims_response b ON a.policy_number = b.policy_number
                                                                 AND a.injury_claim = b.injury_claim
                                                                 AND a.property_claim = b.property_claim 
                                                                 AND a.vehicle_claim = b.vehicle_claim
@@ -89,9 +85,9 @@ resource "databricks_sql_query" "q_ins_fraud_percent" {
   query          = <<-EOT
     SELECT
         CASE WHEN prediction=1 THEN 'Yes' ELSE 'No' END as fraud_predicted,
-        round(count(*) / (SELECT count(*) FROM ${each.value}.insurance_claims_gold) * 100.0, 2) as percent
+        round(count(*) / (SELECT count(*) FROM ${each.value.db_name}.insurance_claims_gold) * 100.0, 2) as percent
     FROM
-        ${each.value}.insurance_claims_gold
+        ${each.value.db_name}.insurance_claims_gold
     GROUP BY prediction
   EOT
   run_as_role    = "viewer"
@@ -129,7 +125,7 @@ resource "databricks_sql_query" "q_ins_fraud_hobbies" {
         sum(case when prediction=1 then total_claim_amount else 0 end) as total_fraud_claim_amount,
         sum(case when prediction=0 then total_claim_amount else 0 end) as total_valid_claim_amount,
         sum(case when prediction=1 then incident_weekend_flag else 0 end)/sum(incident_weekend_flag) * 100.0 as incident_weekend_flag
-    FROM ${each.value}.insurance_claims_gold
+    FROM ${each.value.db_name}.insurance_claims_gold
     GROUP BY insured_hobbies
   EOT
   run_as_role    = "viewer"

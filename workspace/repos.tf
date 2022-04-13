@@ -18,3 +18,21 @@ resource "databricks_permissions" "repo_usage" {
     permission_level = "CAN_MANAGE"
   }
 }
+
+resource "null_resource" "insurance_fraud__user_repo_pull" {
+  for_each = databricks_repo.insurance_fraud__user_repo
+  triggers = {
+    timestamp = "${timestamp()}"
+    id = "${each.value.id}"
+  }
+
+  provisioner "local-exec" {
+    command=<<EOT
+    curl -X PATCH -H "Authorization: Bearer ${var.workspace_token}" -H 'Content-Type: application/json' ${var.workspace_host}/api/2.0/repos/${each.value.id} -d '
+    {
+      "branch": "master"
+    }
+    '
+    EOT
+  }
+}

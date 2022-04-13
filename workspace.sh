@@ -61,6 +61,6 @@ else
   if [ -n "$IMPORT" ] && [ "$IMPORT" = "true" ]; then
     terraform -chdir=$DIR/workspace import -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
   else
-    terraform -chdir=$DIR/workspace apply -auto-approve -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
+    terraform -chdir=$DIR/workspace apply -parallelism=50 -auto-approve -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
   fi
 fi

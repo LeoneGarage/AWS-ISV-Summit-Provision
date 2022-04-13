@@ -266,7 +266,7 @@ resource "null_resource" "dlt_pipeline_python_patch_policy_id" {
         },
         {
             "notebook": {
-                "path": "/Repos/l${each.key}/AWS-ISV-Summit/dlt/python/20_etl_dlt_gold"
+                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/20_etl_dlt_gold"
             }
         },
         {

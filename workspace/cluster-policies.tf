@@ -51,3 +51,38 @@ resource "databricks_permissions" "isv_summit_dlt_policy_permission" {
     permission_level = "CAN_USE"
   }
 }
+
+resource "databricks_cluster_policy" "isv_summit_all_purpose" {
+  name       = "ISV Summit All Purpose cluster policy"
+  definition = jsonencode({
+    "cluster_type": {
+        "type": "fixed",
+        "value": "all-purpose"
+    },
+    "dbus_per_hour": {
+        "type": "range",
+        "maxValue": 100
+    },
+    "autoscale.min_workers": {
+        "type": "range",
+        "minValue": 1,
+        "defaultValue": 2,
+        "hidden": false
+    },
+    "autoscale.max_workers": {
+        "type": "range",
+        "maxValue": 10,
+        "defaultValue": 10,
+        "hidden": false
+    }
+    })
+}
+
+resource "databricks_permissions" "isv_summit_all_purpose_policy_permission" {
+  cluster_policy_id = databricks_cluster_policy.isv_summit_all_purpose.id
+
+  access_control {
+    group_name       = databricks_group.isv_summit.display_name
+    permission_level = "CAN_USE"
+  }
+}

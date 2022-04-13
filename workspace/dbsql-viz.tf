@@ -1,6 +1,11 @@
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
   for_each = databricks_sql_query.q_ins_fraud_by_severity
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Pie"
@@ -95,6 +100,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_weekend_fraud" {
   for_each = databricks_sql_query.q_ins_fraud_by_severity
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Weekend fraud"
@@ -176,6 +186,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_weekend_fra
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_severity_by_hobbies" {
   for_each = databricks_sql_query.q_ins_fraud_by_severity
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Severity by hobbies"
@@ -264,6 +279,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_severity_by
 
 resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_fraud_reported" {
   for_each = databricks_sql_query.q_ins_fraud_fitted
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Fraud reported"
@@ -350,6 +370,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_fraud_reported" 
 
 resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_fraud" {
   for_each = databricks_sql_query.q_ins_fraud_percent
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Fraud"
@@ -437,6 +462,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_fraud" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
   for_each = databricks_sql_query.q_ins_fraud_hobbies
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Fraud pie"
@@ -529,6 +559,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_claim_amount" {
   for_each = databricks_sql_query.q_ins_fraud_hobbies
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Claim Amount"
@@ -617,6 +652,11 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_claim_amount" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_weekend" {
   for_each = databricks_sql_query.q_ins_fraud_hobbies
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Weekend"

@@ -1,5 +1,10 @@
 resource "databricks_sql_visualization" "q_ins_claims_by_city_viz_pie" {
   for_each = databricks_sql_query.q_ins_claims_by_city
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Claim Amount Ratios By City"
@@ -161,6 +166,11 @@ resource "databricks_sql_visualization" "q_ins_claims_by_city_viz_pie" {
 
 resource "databricks_sql_visualization" "q_ins_claims_by_hobbies_viz_pie" {
   for_each = databricks_sql_query.q_ins_claims_by_hobbies
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Claim Amount Ratios By Hobbies"
@@ -322,6 +332,11 @@ resource "databricks_sql_visualization" "q_ins_claims_by_hobbies_viz_pie" {
 
 resource "databricks_sql_visualization" "q_ins_claims_by_auto_type_viz_pie" {
   for_each = databricks_sql_query.q_ins_claims_by_auto_type
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "CHART"
   name        = "Claim Amount Ratios By Auto type"

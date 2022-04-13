@@ -33,6 +33,11 @@ resource "databricks_permissions" "q_ins_fraud_by_severity_permission" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_table" {
   for_each = databricks_sql_query.q_ins_fraud_by_severity
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "TABLE"
   name        = "Table"
@@ -71,6 +76,11 @@ resource "databricks_permissions" "q_ins_fraud_fitted_permission" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_table" {
   for_each = databricks_sql_query.q_ins_fraud_fitted
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "TABLE"
   name        = "Table"
@@ -106,6 +116,11 @@ resource "databricks_permissions" "q_ins_fraud_percent_permission" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_table" {
   for_each = databricks_sql_query.q_ins_fraud_percent
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "TABLE"
   name        = "Table"
@@ -144,6 +159,11 @@ resource "databricks_permissions" "q_ins_fraud_hobbies_permission" {
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_table" {
   for_each = databricks_sql_query.q_ins_fraud_hobbies
+  lifecycle {
+    ignore_changes = [
+        options
+    ]
+  }
   query_id    = each.value.id
   type        = "TABLE"
   name        = "Table"

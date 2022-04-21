@@ -9,88 +9,87 @@ resource "databricks_sql_visualization" "q_ins_claims_by_city_viz_pie" {
   type        = "CHART"
   name        = "Claim Amount Ratios By City"
   description = ""
-  options = jsonencode(
-            {
-        "version": 2,
-        "globalSeriesType": "pie",
-        "sortX": true,
-        "legend": {
-            "enabled": true,
-            "placement": "auto",
-            "traceorder": "normal"
-        },
-        "xAxis": {
-            "type": "-",
-            "labels": {
-                "enabled": true
-            },
-            "title": {
-                "text": "Incident City"
-            }
-        },
-        "yAxis": [
-            {
-                "type": "linear",
-                "title": {
-                    "text": "Claim Amount Ratios"
-                }
-            },
-            {
-                "type": "linear",
-                "opposite": true,
-                "title": {
-                    "text": null
-                }
-            }
-        ],
-        "alignYAxesAtZero": false,
-        "error_y": {
-            "type": "data",
-            "visible": true
-        },
-        "series": {
-            "stacking": null,
-            "error_y": {
-                "type": "data",
-                "visible": true
-            }
-        },
-        "seriesOptions": {
-            "0": {
-                "name": "Claim Amount Ratios"
-            },
-            "claim_amount": {
+  options = jsonencode({
+                    "alignYAxesAtZero": false,
+                    "coefficient": 1,
+                    "columnConfigurationMap": {
+                        "series": {
+                            "column": null
+                        },
+                        "x": {
+                            "column": "incident_city"
+                        },
+                        "y": [
+                            {
+                                "column": "claim_amount"
+                            }
+                        ]
+                    },
+                    "dateTimeFormat": "YYYY-MM-DD HH:mm",
+                    "direction": {
+                        "type": "counterclockwise"
+                    },
+                    "error_y": {
+                        "type": "data",
+                        "visible": true
+                    },
+                    "globalSeriesType": "pie",
+                    "legend": {
+                        "enabled": true,
+                        "placement": "auto",
+                        "traceorder": "normal"
+                    },
+                    "missingValuesAsZero": true,
+                    "numberFormat": "0,0[.]00000",
+                    "percentFormat": "0[.]00%",
+                    "series": {
+                        "error_y": {
+                            "type": "data",
+                            "visible": true
+                        },
+                        "stacking": null
+                    },
+                    "seriesOptions": {
+                        "0": {
+                            "name": "Claim Amount Ratios"
+                        },
+                        "claim_amount": {
                             "name": "Claim Amount Ratios"
                         }
-        },
-        "valuesOptions": {},
-        "direction": {
-            "type": "counterclockwise"
-        },
-        "sizemode": "diameter",
-        "coefficient": 1,
-        "numberFormat": "0,0[.]00000",
-        "percentFormat": "0[.]00%",
-        "textFormat": "",
-        "missingValuesAsZero": true,
-        "showDataLabels": true,
-        "dateTimeFormat": "YYYY-MM-DD HH:mm",
-        "columnConfigurationMap": {
-            "x": {
-                "column": "incident_city"
-            },
-            "y": [
-                {
-                    "column": "claim_amount"
+                    },
+                    "showDataLabels": true,
+                    "showPlotlyControls": true,
+                    "sizemode": "diameter",
+                    "sortX": true,
+                    "swappedAxes": false,
+                    "textFormat": "",
+                    "valuesOptions": {},
+                    "version": 2,
+                    "xAxis": {
+                        "labels": {
+                            "enabled": true
+                        },
+                        "title": {
+                            "text": "Incident City"
+                        },
+                        "type": "-"
+                    },
+                    "yAxis": [
+                        {
+                            "title": {
+                                "text": "Claim Amount Ratios"
+                            },
+                            "type": "linear"
+                        },
+                        {
+                            "opposite": true,
+                            "title": {
+                                "text": null
+                            },
+                            "type": "linear"
+                        }
+                    ]
                 }
-            ],
-            "series": {
-                "column": null
-            }
-        },
-        "showPlotlyControls": true,
-        "swappedAxes": false
-    }
     # {
     #     "alignYAxesAtZero": false,
     #     "coefficient": 1,
@@ -175,88 +174,87 @@ resource "databricks_sql_visualization" "q_ins_claims_by_hobbies_viz_pie" {
   type        = "CHART"
   name        = "Claim Amount Ratios By Hobbies"
   description = ""
-  options = jsonencode(
-            {
-        "version": 2,
-        "globalSeriesType": "pie",
-        "sortX": true,
-        "legend": {
-            "enabled": true,
-            "placement": "auto",
-            "traceorder": "normal"
-        },
-        "xAxis": {
-            "type": "-",
-            "labels": {
-                "enabled": true
-            },
-            "title": {
-                "text": "Insured Hobbies"
-            }
-        },
-        "yAxis": [
-            {
-                "type": "linear",
-                "title": {
-                    "text": "Claim Amount Ratios"
-                }
-            },
-            {
-                "type": "linear",
-                "opposite": true,
-                "title": {
-                    "text": null
-                }
-            }
-        ],
-        "alignYAxesAtZero": false,
-        "error_y": {
-            "type": "data",
-            "visible": true
-        },
-        "series": {
-            "stacking": null,
-            "error_y": {
-                "type": "data",
-                "visible": true
-            }
-        },
-        "seriesOptions": {
-            "0": {
-                "name": "Claim Amount Ratios"
-            },
-            "claim_amount": {
+  options = jsonencode({
+                    "alignYAxesAtZero": false,
+                    "coefficient": 1,
+                    "columnConfigurationMap": {
+                        "series": {
+                            "column": null
+                        },
+                        "x": {
+                            "column": "insured_hobbies"
+                        },
+                        "y": [
+                            {
+                                "column": "claim_amount"
+                            }
+                        ]
+                    },
+                    "dateTimeFormat": "YYYY-MM-DD HH:mm",
+                    "direction": {
+                        "type": "counterclockwise"
+                    },
+                    "error_y": {
+                        "type": "data",
+                        "visible": true
+                    },
+                    "globalSeriesType": "pie",
+                    "legend": {
+                        "enabled": true,
+                        "placement": "auto",
+                        "traceorder": "normal"
+                    },
+                    "missingValuesAsZero": true,
+                    "numberFormat": "0,0[.]00000",
+                    "percentFormat": "0[.]00%",
+                    "series": {
+                        "error_y": {
+                            "type": "data",
+                            "visible": true
+                        },
+                        "stacking": null
+                    },
+                    "seriesOptions": {
+                        "0": {
+                            "name": "Claim Amount Ratios"
+                        },
+                        "claim_amount": {
                             "name": "Claim Amount Ratios"
                         }
-        },
-        "valuesOptions": {},
-        "direction": {
-            "type": "counterclockwise"
-        },
-        "sizemode": "diameter",
-        "coefficient": 1,
-        "numberFormat": "0,0[.]00000",
-        "percentFormat": "0[.]00%",
-        "textFormat": "",
-        "missingValuesAsZero": true,
-        "showDataLabels": true,
-        "dateTimeFormat": "YYYY-MM-DD HH:mm",
-        "columnConfigurationMap": {
-            "x": {
-                "column": "insured_hobbies"
-            },
-            "y": [
-                {
-                    "column": "claim_amount"
+                    },
+                    "showDataLabels": true,
+                    "showPlotlyControls": true,
+                    "sizemode": "diameter",
+                    "sortX": true,
+                    "swappedAxes": false,
+                    "textFormat": "",
+                    "valuesOptions": {},
+                    "version": 2,
+                    "xAxis": {
+                        "labels": {
+                            "enabled": true
+                        },
+                        "title": {
+                            "text": "Insured Hobbies"
+                        },
+                        "type": "-"
+                    },
+                    "yAxis": [
+                        {
+                            "title": {
+                                "text": "Claim Amount Ratios"
+                            },
+                            "type": "linear"
+                        },
+                        {
+                            "opposite": true,
+                            "title": {
+                                "text": null
+                            },
+                            "type": "linear"
+                        }
+                    ]
                 }
-            ],
-            "series": {
-                "column": null
-            }
-        },
-        "showPlotlyControls": true,
-        "swappedAxes": false
-    }
     # {
     #     "alignYAxesAtZero": false,
     #     "coefficient": 1,
@@ -341,88 +339,87 @@ resource "databricks_sql_visualization" "q_ins_claims_by_auto_type_viz_pie" {
   type        = "CHART"
   name        = "Claim Amount Ratios By Auto type"
   description = ""
-  options = jsonencode(
-            {
-        "version": 2,
-        "globalSeriesType": "pie",
-        "sortX": true,
-        "legend": {
-            "enabled": true,
-            "placement": "auto",
-            "traceorder": "normal"
-        },
-        "xAxis": {
-            "type": "-",
-            "labels": {
-                "enabled": true
-            },
-            "title": {
-                "text": "Auto Type"
-            }
-        },
-        "yAxis": [
-            {
-                "type": "linear",
-                "title": {
-                    "text": "Claim Amount Ratios"
-                }
-            },
-            {
-                "type": "linear",
-                "opposite": true,
-                "title": {
-                    "text": null
-                }
-            }
-        ],
-        "alignYAxesAtZero": false,
-        "error_y": {
-            "type": "data",
-            "visible": true
-        },
-        "series": {
-            "stacking": null,
-            "error_y": {
-                "type": "data",
-                "visible": true
-            }
-        },
-        "seriesOptions": {
-            "0": {
-                "name": "Claim Amount Ratios"
-            },
-            "claim_amount": {
+  options = jsonencode({
+                    "alignYAxesAtZero": false,
+                    "coefficient": 1,
+                    "columnConfigurationMap": {
+                        "series": {
+                            "column": null
+                        },
+                        "x": {
+                            "column": "auto_type"
+                        },
+                        "y": [
+                            {
+                                "column": "claim_amount"
+                            }
+                        ]
+                    },
+                    "dateTimeFormat": "YYYY-MM-DD HH:mm",
+                    "direction": {
+                        "type": "counterclockwise"
+                    },
+                    "error_y": {
+                        "type": "data",
+                        "visible": true
+                    },
+                    "globalSeriesType": "pie",
+                    "legend": {
+                        "enabled": true,
+                        "placement": "auto",
+                        "traceorder": "normal"
+                    },
+                    "missingValuesAsZero": true,
+                    "numberFormat": "0,0[.]00000",
+                    "percentFormat": "0[.]00%",
+                    "series": {
+                        "error_y": {
+                            "type": "data",
+                            "visible": true
+                        },
+                        "stacking": null
+                    },
+                    "seriesOptions": {
+                        "0": {
+                            "name": "Claim Amount Ratios"
+                        },
+                        "claim_amount": {
                             "name": "Claim Amount Ratios"
                         }
-        },
-        "valuesOptions": {},
-        "direction": {
-            "type": "counterclockwise"
-        },
-        "sizemode": "diameter",
-        "coefficient": 1,
-        "numberFormat": "0,0[.]00000",
-        "percentFormat": "0[.]00%",
-        "textFormat": "",
-        "missingValuesAsZero": true,
-        "showDataLabels": true,
-        "dateTimeFormat": "YYYY-MM-DD HH:mm",
-        "columnConfigurationMap": {
-            "x": {
-                "column": "auto_type"
-            },
-            "y": [
-                {
-                    "column": "claim_amount"
+                    },
+                    "showDataLabels": true,
+                    "showPlotlyControls": true,
+                    "sizemode": "diameter",
+                    "sortX": true,
+                    "swappedAxes": false,
+                    "textFormat": "",
+                    "valuesOptions": {},
+                    "version": 2,
+                    "xAxis": {
+                        "labels": {
+                            "enabled": true
+                        },
+                        "title": {
+                            "text": "Auto Type"
+                        },
+                        "type": "-"
+                    },
+                    "yAxis": [
+                        {
+                            "title": {
+                                "text": "Claim Amount Ratios"
+                            },
+                            "type": "linear"
+                        },
+                        {
+                            "opposite": true,
+                            "title": {
+                                "text": null
+                            },
+                            "type": "linear"
+                        }
+                    ]
                 }
-            ],
-            "series": {
-                "column": null
-            }
-        },
-        "showPlotlyControls": true,
-        "swappedAxes": false
-    }
     # {
     #     "alignYAxesAtZero": false,
     #     "coefficient": 1,

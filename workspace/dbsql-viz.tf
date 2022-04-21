@@ -10,51 +10,45 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
   type        = "CHART"
   name        = "Pie"
   description = ""
-  options = jsonencode(
-      {
-        "version": 2,
+  options = jsonencode({
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "series": {
+                "column": null
+            },
+            "x": {
+                "column": "incident_severity"
+            },
+            "y": [
+                {
+                    "column": "fraud_predicted"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
         "globalSeriesType": "pie",
-        "sortX": true,
         "legend": {
             "enabled": true,
             "placement": "auto",
             "traceorder": "normal"
         },
-        "xAxis": {
-            "type": "-",
-            "labels": {
-                "enabled": true
-            },
-            "title": {
-                "text": "Incident Severity"
-            }
-        },
-        "yAxis": [
-            {
-                "type": "linear",
-                "title": {
-                    "text": "Fraud Predicted"
-                }
-            },
-            {
-                "type": "linear",
-                "opposite": true,
-                "title": {
-                    "text": null
-                }
-            }
-        ],
-        "alignYAxesAtZero": false,
-        "error_y": {
-            "type": "data",
-            "visible": true
-        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
         "series": {
-            "stacking": null,
             "error_y": {
                 "type": "data",
                 "visible": true
-            }
+            },
+            "stacking": null
         },
         "seriesOptions": {
             "0": {
@@ -64,38 +58,42 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_pie" {
                 "name": "Fraud Predicted"
             },
             "fraud_predicted": {
-                            "name": "Fraud Predicted"
-                        }
-        },
-        "valuesOptions": {},
-        "direction": {
-            "type": "counterclockwise"
-        },
-        "sizemode": "diameter",
-        "coefficient": 1,
-        "numberFormat": "0,0[.]00000",
-        "percentFormat": "0[.]00%",
-        "textFormat": "",
-        "missingValuesAsZero": true,
-        "showDataLabels": true,
-        "dateTimeFormat": "YYYY-MM-DD HH:mm",
-        "columnConfigurationMap": {
-            "x": {
-                "column": "incident_severity"
-            },
-            "y": [
-                {
-                    "column": "fraud_predicted"
-                }
-            ],
-            "series": {
-                "column": null
+                "name": "Fraud Predicted"
             }
         },
+        "showDataLabels": true,
         "showPlotlyControls": true,
-        "swappedAxes": false
-    }
-  )
+        "sizemode": "diameter",
+        "sortX": true,
+        "swappedAxes": false,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Incident Severity"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Fraud Predicted"
+                },
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
+                },
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_weekend_fraud" {
@@ -110,78 +108,78 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_weekend_fra
   name        = "Weekend fraud"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "column",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "x": {
+                "column": "insured_hobbies"
+            },
+            "y": [
+                {
+                    "column": "fraud_incident_weekend_flag"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Insured Hobbies"
-                    }
+                {
+                    "column": "valid_incident_weekend_flag"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {},
+        "showDataLabels": false,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Insured Hobbies"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Fraud Weekend Incident"
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Fraud Weekend Incident"
-                        }
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": "Valid Weekend Incident"
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": "Valid Weekend Incident"
                 },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {},
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": false,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "insured_hobbies"
-                    },
-                    "y": [
-                        {
-                            "column": "fraud_incident_weekend_flag"
-                        },
-                        {
-                            "column": "valid_incident_weekend_flag"
-                        }
-                    ]
-                },
-                "showPlotlyControls": true
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_severity_by_hobbies" {
@@ -196,85 +194,85 @@ resource "databricks_sql_visualization" "q_ins_fraud_by_severity_viz_severity_by
   name        = "Severity by hobbies"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "column",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "series": {
+                "column": "incident_severity"
+            },
+            "x": {
+                "column": "insured_hobbies"
+            },
+            "y": [
+                {
+                    "column": "fraud_predicted"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {
+            "Total Loss": {
+                "yAxis": 0
+            },
+            "total_claim_amount": {
+                "name": "Total Claim Amount"
+            }
+        },
+        "showDataLabels": false,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Hobbies"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Fraud Predicted"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Hobbies"
-                    }
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Fraud Predicted"
-                        }
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": null
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
-                },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {
-                    "total_claim_amount": {
-                        "name": "Total Claim Amount"
-                    },
-                    "Total Loss": {
-                        "yAxis": 0
-                    }
-                },
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": false,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "insured_hobbies"
-                    },
-                    "y": [
-                        {
-                            "column": "fraud_predicted"
-                        }
-                    ],
-                    "series": {
-                        "column": "incident_severity"
-                    }
-                },
-                "showPlotlyControls": true
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_fraud_reported" {
@@ -289,83 +287,83 @@ resource "databricks_sql_visualization" "q_ins_fraud_fitted_viz_fraud_reported" 
   name        = "Fraud reported"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "column",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "x": {
+                "column": "fraud_reported"
+            },
+            "y": [
+                {
+                    "column": "count"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {
+            "count": {
+                "name": "Total Fraud",
+                "yAxis": 0
+            }
+        },
+        "showDataLabels": true,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "swappedAxes": false,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Fraud"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "rangeMax": null,
+                "rangeMin": null,
+                "title": {
+                    "text": "Total Fraud"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Fraud"
-                    }
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Total Fraud"
-                        },
-                        "rangeMax": null,
-                        "rangeMin": null
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": null
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
-                },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {
-                    "count": {
-                        "name": "Total Fraud",
-                        "yAxis": 0
-                    }
-                },
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": true,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "fraud_reported"
-                    },
-                    "y": [
-                        {
-                            "column": "count"
-                        }
-                    ]
-                },
-                "showPlotlyControls": true,
-                "swappedAxes": false
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_fraud" {
@@ -381,83 +379,81 @@ resource "databricks_sql_visualization" "q_ins_fraud_percent_viz_fraud" {
   description = ""
 
   // The options encoded in this field are passed verbatim to the SQLA API.
-  options = jsonencode(
-    {
-            "version": 2,
-            "globalSeriesType": "column",
-            "sortX": true,
-            "legend": {
-                "enabled": true,
-                "placement": "auto",
-                "traceorder": "normal"
+  options = jsonencode({
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "x": {
+                "column": "fraud_predicted"
             },
-            "xAxis": {
-                "type": "-",
-                "labels": {
-                    "enabled": true
-                },
-                "title": {
-                    "text": "Fraud Predicted"
-                }
-            },
-            "yAxis": [
+            "y": [
                 {
-                    "type": "linear",
-                    "title": {
-                        "text": "percent"
-                    }
-                },
-                {
-                    "type": "linear",
-                    "opposite": true,
-                    "title": {
-                        "text": null
-                    }
+                    "column": "percent"
                 }
-            ],
-            "alignYAxesAtZero": false,
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00%",
+        "percentFormat": "0[.]00%",
+        "run_as_role": "viewer",
+        "series": {
             "error_y": {
                 "type": "data",
                 "visible": true
             },
-            "series": {
-                "stacking": null,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
-                }
+            "stacking": null
+        },
+        "seriesOptions": {
+            "count": {
+                "name": "Total"
+            }
+        },
+        "showDataLabels": true,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
             },
-            "seriesOptions": {
-                "count": {
-                    "name": "Total"
-                }
+            "title": {
+                "text": "Fraud Predicted"
             },
-            "valuesOptions": {},
-            "direction": {
-                "type": "counterclockwise"
-            },
-            "sizemode": "diameter",
-            "coefficient": 1,
-            "numberFormat": "0,0[.]00%",
-            "percentFormat": "0[.]00%",
-            "textFormat": "",
-            "missingValuesAsZero": true,
-            "showDataLabels": true,
-            "dateTimeFormat": "YYYY-MM-DD HH:mm",
-            "columnConfigurationMap": {
-                "x": {
-                    "column": "fraud_predicted"
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "percent"
                 },
-                "y": [
-                    {
-                        "column": "percent"
-                    }
-                ]
+                "type": "linear"
             },
-            "showPlotlyControls": true,
-            "run_as_role": "viewer"
-        }
-    )
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
+                },
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
@@ -472,89 +468,89 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_fraud_pie" {
   name        = "Fraud pie"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "pie",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "series": {
+                "column": null
+            },
+            "x": {
+                "column": "insured_hobbies"
+            },
+            "y": [
+                {
+                    "column": "hobbies_count"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "pie",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {
+            "0": {
+                "name": "No Fraud Predicted"
+            },
+            "1": {
+                "name": "Fraud Predicted"
+            },
+            "hobbies_count": {
+                "name": "Hobby Fraud ratios"
+            }
+        },
+        "showDataLabels": true,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "swappedAxes": false,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Insured Hobbies"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Hobbies Count"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Insured Hobbies"
-                    }
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Hobbies Count"
-                        }
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": null
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
-                },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {
-                    "0": {
-                        "name": "No Fraud Predicted"
-                    },
-                    "1": {
-                        "name": "Fraud Predicted"
-                    },
-                    "hobbies_count": {
-                            "name": "Hobby Fraud ratios"
-                        }
-                },
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": true,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "insured_hobbies"
-                    },
-                    "y": [
-                        {
-                            "column": "hobbies_count"
-                        }
-                    ],
-                    "series": {
-                        "column": null
-                    }
-                },
-                "showPlotlyControls": true,
-                "swappedAxes": false
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_claim_amount" {
@@ -569,85 +565,85 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_claim_amount" {
   name        = "Claim Amount"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "column",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "series": {
+                "column": null
+            },
+            "x": {
+                "column": "insured_hobbies"
+            },
+            "y": [
+                {
+                    "column": "total_fraud_claim_amount"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Hobbies"
-                    }
+                {
+                    "column": "total_valid_claim_amount"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {
+            "total_claim_amount": {
+                "name": "Total Claim Amount"
+            }
+        },
+        "showDataLabels": false,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Hobbies"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Total Fraud Claim Amount"
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Total Fraud Claim Amount"
-                        }
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": "Total Valid Claim Amount"
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": "Total Valid Claim Amount"
                 },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {
-                    "total_claim_amount": {
-                        "name": "Total Claim Amount"
-                    }
-                },
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": false,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "insured_hobbies"
-                    },
-                    "y": [
-                        {
-                            "column": "total_fraud_claim_amount"
-                        },
-                        {
-                            "column": "total_valid_claim_amount"
-                        }
-                    ],
-                    "series": {
-                        "column": null
-                    }
-                },
-                "showPlotlyControls": true
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }
 
 resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_weekend" {
@@ -662,73 +658,73 @@ resource "databricks_sql_visualization" "q_ins_fraud_hobbies_viz_weekend" {
   name        = "Weekend"
   description = ""
   options = jsonencode({
-                "version": 2,
-                "globalSeriesType": "column",
-                "sortX": true,
-                "legend": {
-                    "enabled": true,
-                    "placement": "auto",
-                    "traceorder": "normal"
+        "alignYAxesAtZero": false,
+        "coefficient": 1,
+        "columnConfigurationMap": {
+            "x": {
+                "column": "insured_hobbies"
+            },
+            "y": [
+                {
+                    "column": "incident_weekend_flag"
+                }
+            ]
+        },
+        "dateTimeFormat": "YYYY-MM-DD HH:mm",
+        "direction": {
+            "type": "counterclockwise"
+        },
+        "error_y": {
+            "type": "data",
+            "visible": true
+        },
+        "globalSeriesType": "column",
+        "legend": {
+            "enabled": true,
+            "placement": "auto",
+            "traceorder": "normal"
+        },
+        "missingValuesAsZero": true,
+        "numberFormat": "0,0[.]00000",
+        "percentFormat": "0[.]00%",
+        "series": {
+            "error_y": {
+                "type": "data",
+                "visible": true
+            },
+            "stacking": null
+        },
+        "seriesOptions": {},
+        "showDataLabels": false,
+        "showPlotlyControls": true,
+        "sizemode": "diameter",
+        "sortX": true,
+        "textFormat": "",
+        "valuesOptions": {},
+        "version": 2,
+        "xAxis": {
+            "labels": {
+                "enabled": true
+            },
+            "title": {
+                "text": "Insured Hobbies"
+            },
+            "type": "-"
+        },
+        "yAxis": [
+            {
+                "title": {
+                    "text": "Weekend Incident"
                 },
-                "xAxis": {
-                    "type": "-",
-                    "labels": {
-                        "enabled": true
-                    },
-                    "title": {
-                        "text": "Insured Hobbies"
-                    }
+                "type": "linear"
+            },
+            {
+                "opposite": true,
+                "title": {
+                    "text": null
                 },
-                "yAxis": [
-                    {
-                        "type": "linear",
-                        "title": {
-                            "text": "Weekend Incident"
-                        }
-                    },
-                    {
-                        "type": "linear",
-                        "opposite": true,
-                        "title": {
-                            "text": null
-                        }
-                    }
-                ],
-                "alignYAxesAtZero": false,
-                "error_y": {
-                    "type": "data",
-                    "visible": true
-                },
-                "series": {
-                    "stacking": null,
-                    "error_y": {
-                        "type": "data",
-                        "visible": true
-                    }
-                },
-                "seriesOptions": {},
-                "valuesOptions": {},
-                "direction": {
-                    "type": "counterclockwise"
-                },
-                "sizemode": "diameter",
-                "coefficient": 1,
-                "numberFormat": "0,0[.]00000",
-                "percentFormat": "0[.]00%",
-                "textFormat": "",
-                "missingValuesAsZero": true,
-                "showDataLabels": false,
-                "dateTimeFormat": "YYYY-MM-DD HH:mm",
-                "columnConfigurationMap": {
-                    "x": {
-                        "column": "insured_hobbies"
-                    },
-                    "y": [
-                        {
-                            "column": "incident_weekend_flag"
-                        }
-                    ]
-                },
-                "showPlotlyControls": true
-            })
+                "type": "linear"
+            }
+        ]
+    })
 }

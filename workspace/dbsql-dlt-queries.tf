@@ -16,7 +16,7 @@ resource "databricks_permissions" "q_ins_claims_by_city_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 
@@ -52,7 +52,7 @@ resource "databricks_permissions" "q_ins_claims_by_hobbies_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 
@@ -88,7 +88,7 @@ resource "databricks_permissions" "q_ins_claims_by_auto_type_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 

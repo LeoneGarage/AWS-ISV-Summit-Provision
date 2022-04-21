@@ -113,6 +113,6 @@ resource "databricks_permissions" "job_usage" {
 
   access_control {
     user_name       = trimsuffix(each.value.name, "_InsurancePipeline")
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_MANAGE"
   }
 }

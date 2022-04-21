@@ -27,7 +27,7 @@ resource "databricks_permissions" "q_ins_fraud_by_severity_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 
@@ -70,7 +70,7 @@ resource "databricks_permissions" "q_ins_fraud_fitted_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 
@@ -110,7 +110,7 @@ resource "databricks_permissions" "q_ins_fraud_percent_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 
@@ -153,7 +153,7 @@ resource "databricks_permissions" "q_ins_fraud_hobbies_permission" {
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "IS_OWNER"
+    permission_level = "CAN_EDIT"
   }
 }
 

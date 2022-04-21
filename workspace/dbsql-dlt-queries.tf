@@ -10,13 +10,13 @@ resource "databricks_sql_query" "q_ins_claims_by_city" {
 }
 
 resource "databricks_permissions" "q_ins_claims_by_city_permission" {
-  for_each = databricks_sql_query.q_ins_claims_by_city
+  for_each = { for k, q in databricks_sql_query.q_ins_claims_by_city: k => q if k != data.databricks_current_user.me.user_name }
   sql_query_id = each.value.id
 
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "CAN_EDIT"
+    permission_level = "IS_OWNER"
   }
 }
 
@@ -46,13 +46,13 @@ resource "databricks_sql_query" "q_ins_claims_by_hobbies" {
 }
 
 resource "databricks_permissions" "q_ins_claims_by_hobbies_permission" {
-  for_each = databricks_sql_query.q_ins_claims_by_hobbies
+  for_each = { for k, q in databricks_sql_query.q_ins_claims_by_hobbies: k => q if k != data.databricks_current_user.me.user_name }
   sql_query_id = each.value.id
 
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "CAN_EDIT"
+    permission_level = "IS_OWNER"
   }
 }
 
@@ -82,13 +82,13 @@ resource "databricks_sql_query" "q_ins_claims_by_auto_type" {
 }
 
 resource "databricks_permissions" "q_ins_claims_by_auto_type_permission" {
-  for_each = databricks_sql_query.q_ins_claims_by_auto_type
+  for_each = { for k, q in databricks_sql_query.q_ins_claims_by_auto_type: k => q if k != data.databricks_current_user.me.user_name }
   sql_query_id = each.value.id
 
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
   access_control {
     user_name       = each.key
-    permission_level = "CAN_EDIT"
+    permission_level = "IS_OWNER"
   }
 }
 

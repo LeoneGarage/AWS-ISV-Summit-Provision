@@ -4,13 +4,13 @@
 # }
 
 resource "databricks_repo" "insurance_fraud__user_repo" {
-  for_each = databricks_user.users
+  for_each = local.all_users
   url = "https://github.com/LeoneGarage/AWS-ISV-Summit.git"
   path = "/Repos/${each.value.user_name}/AWS-ISV-Summit"
 }
 
 resource "databricks_permissions" "repo_usage" {
-  for_each = databricks_user.users
+  for_each = { for k, r in local.all_users: k => r if k != data.databricks_current_user.me.user_name }
   repo_id = one([for r in databricks_repo.insurance_fraud__user_repo: r if r.path == "/Repos/${each.value.user_name}/AWS-ISV-Summit"]).id
 
   access_control {

@@ -14,13 +14,13 @@ resource "databricks_group" "isv_summit_group" {
 }
 
 resource "databricks_user" "users" {
-  for_each = { for u in local.users : u.uid => u }
+  for_each = { for u in local.users : u.uid => u if u.uid != data.databricks_current_user.me.user_name }
   user_name = each.value.uid
   display_name = each.value.name
 }
 
 resource "databricks_group_member" "isv_summit_members" {
-  for_each = { for u in range(0, length(databricks_user.users)) : u => element(values(databricks_user.users), u) }
+  for_each = { for u in range(0, length(local.all_users)) : u => element(values(local.all_users), u) }
   group_id  = databricks_group.isv_summit_group[floor(each.key / 10)].id
   member_id = each.value.id
 }

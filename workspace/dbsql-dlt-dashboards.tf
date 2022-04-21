@@ -1,10 +1,10 @@
 resource "databricks_sql_dashboard" "d_ins_claims" {
-  for_each = { for u in databricks_user.users: u.user_name => u }
+  for_each = { for u in local.all_users: u.user_name => u }
   name = "${each.value.user_name} Insurance Claims"
 }
 
 resource "databricks_permissions" "d_ins_claims_permission" {
-  for_each = databricks_sql_dashboard.d_ins_claims
+  for_each = { for k, d in databricks_sql_dashboard.d_ins_claims: k => d if k != data.databricks_current_user.me.user_name }
   sql_dashboard_id = each.value.id
 
   // You can only specify "CAN_EDIT" permissions if the query `run_as_role` equals `viewer`.
@@ -15,7 +15,7 @@ resource "databricks_permissions" "d_ins_claims_permission" {
 }
 
 resource "databricks_sql_widget" "d_ins_claims_w_q_ins_claims_by_city_viz_pie" {
-  for_each = databricks_user.users
+  for_each = local.all_users
   dashboard_id = databricks_sql_dashboard.d_ins_claims[each.value.user_name].id
   visualization_id = databricks_sql_visualization.q_ins_claims_by_city_viz_pie[each.value.user_name].id
   title = "Chart - Insurance Claim Amount Ratios by city"
@@ -30,7 +30,7 @@ resource "databricks_sql_widget" "d_ins_claims_w_q_ins_claims_by_city_viz_pie" {
 }
 
 resource "databricks_sql_widget" "d_ins_claims_w_q_ins_claims_by_hobbies_viz_pie" {
-  for_each = databricks_user.users
+  for_each = local.all_users
   dashboard_id = databricks_sql_dashboard.d_ins_claims[each.value.user_name].id
   visualization_id = databricks_sql_visualization.q_ins_claims_by_hobbies_viz_pie[each.value.user_name].id
   title = "Chart - Insurance Claim Amount Ratios by hobbies"
@@ -45,7 +45,7 @@ resource "databricks_sql_widget" "d_ins_claims_w_q_ins_claims_by_hobbies_viz_pie
 }
 
 resource "databricks_sql_widget" "d_ins_claims_w_q_ins_claims_by_auto_type_viz_pie" {
-  for_each = databricks_user.users
+  for_each = local.all_users
   dashboard_id = databricks_sql_dashboard.d_ins_claims[each.value.user_name].id
   visualization_id = databricks_sql_visualization.q_ins_claims_by_auto_type_viz_pie[each.value.user_name].id
   title = "Chart - Insurance Claim Amount Ratios by Auto type"

@@ -3,7 +3,7 @@ locals {
 }
 
 resource "databricks_job" "job_pipeline" {
-  for_each = databricks_user.users
+  for_each = local.all_users
   name = "${each.value.user_name}_InsurancePipeline"
 
   job_cluster {
@@ -108,7 +108,7 @@ resource "databricks_job" "job_pipeline" {
 }
 
 resource "databricks_permissions" "job_usage" {
-  for_each = databricks_job.job_pipeline
+  for_each = { for k, j in databricks_job.job_pipeline: k => j if k != data.databricks_current_user.me.user_name }
   job_id = each.value.id
 
   access_control {

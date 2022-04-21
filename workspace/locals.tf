@@ -1,5 +1,6 @@
 locals {
-  safe_user_names = { for u in databricks_user.users: u.user_name => {
+  all_users = merge(databricks_user.users, { "${data.databricks_current_user.me.user_name}" = data.databricks_current_user.me } )
+  safe_user_names = { for u in local.all_users: u.user_name => {
       user_name: u.user_name,
       safe_user_name: replace(replace(replace(split("@", u.user_name)[0], ".", "_"), "-", "_"), "+", "_")
     }

@@ -14,6 +14,10 @@ variable "workspace" {
   default = ""
 }
 
+variable "cloud" {
+  default = "aws"
+}
+
 variable "tags" {
   default = {}
 }

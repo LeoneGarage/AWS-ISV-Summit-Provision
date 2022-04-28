@@ -11,6 +11,7 @@ PLAN=
 IMPORT=
 VARFILE=secrets.tfvars
 USERS_PATH=users.csv
+CLOUD=aws
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
@@ -35,6 +36,11 @@ while [[ $# -gt 0 ]]; do
       shift # past argument
       shift # past value
       ;;
+    -c|--cloud)
+      CLOUD="$2"
+      shift # past argument
+      shift # past value
+      ;;
     *)    # unknown option
       POSITIONAL+=("$1") # save it in an array for later
       shift # past argument
@@ -56,11 +62,11 @@ terraform -chdir=$DIR/workspace init
 workspace_create_if_not_exists $DIR/workspace $ACCOUNT_NAME $WORKSPACE_NAME
 workspace_select "$DIR/workspace" $ACCOUNT_NAME $WORKSPACE_NAME
 if [ -n "$PLAN" ] && [ "$PLAN" = "true" ]; then
-  terraform -chdir=$DIR/workspace plan -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
+  terraform -chdir=$DIR/workspace plan -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var="cloud=$CLOUD" -var-file=$VARFILE $@
 else
   if [ -n "$IMPORT" ] && [ "$IMPORT" = "true" ]; then
-    terraform -chdir=$DIR/workspace import -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
+    terraform -chdir=$DIR/workspace import -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var="cloud=$CLOUD" -var-file=$VARFILE $@
   else
-    terraform -chdir=$DIR/workspace apply -parallelism=50 -auto-approve -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
+    terraform -chdir=$DIR/workspace apply -parallelism=50 -auto-approve -var="workspace=$ACCOUNT_NAME-$WORKSPACE_NAME" -var="cloud=$CLOUD" -var="users_filepath=$USERS_PATH" -var-file=$VARFILE $@
   fi
 fi

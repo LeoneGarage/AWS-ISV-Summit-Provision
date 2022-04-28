@@ -14,8 +14,8 @@ resource "databricks_cluster" "interactive_cluster" {
   for_each = databricks_group.isv_summit_group
   cluster_name            = each.value.display_name
   spark_version           = data.databricks_spark_version.ml.id
-  node_type_id            = "i3.xlarge"
-  driver_node_type_id     = "c4.4xlarge"
+  node_type_id            = var.cloud == "aws" ? "i3.xlarge" : var.cloud == "azure" ? "Standard_L4s" : "i3.xlarge"
+  driver_node_type_id     = var.cloud == "aws" ? "c4.4xlarge" : var.cloud == "azure" ? "Standard_F16" : "c4.4xlarge"
   autotermination_minutes = 30
   autoscale {
     min_workers = 2
@@ -31,14 +31,25 @@ resource "databricks_cluster" "interactive_cluster" {
   }
   custom_tags = merge({"ResourceClass": "Serverless"}, var.tags)
 
-  aws_attributes {
-    first_on_demand = 1
-    availability = "SPOT_WITH_FALLBACK"
-    zone_id = "auto"
-    spot_bid_price_percent = 100
-    ebs_volume_type = "GENERAL_PURPOSE_SSD"
-    ebs_volume_count = 3
-    ebs_volume_size = 100
+  dynamic "azure_attributes" {
+    for_each = range(var.cloud == "azure" ? 1 : 0)
+    content {
+      first_on_demand = 1
+      availability = "ON_DEMAND_AZURE"
+      spot_bid_max_price = -1
+    }
+  }
+  dynamic "aws_attributes" {
+    for_each = range(var.cloud == "aws" ? 1 : 0)
+    content {
+      first_on_demand = 1
+      availability = "SPOT_WITH_FALLBACK"
+      zone_id = "auto"
+      spot_bid_price_percent = 100
+      ebs_volume_type = "GENERAL_PURPOSE_SSD"
+      ebs_volume_count = 3
+      ebs_volume_size = 100
+    }
   }
 }
 

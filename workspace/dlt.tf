@@ -110,22 +110,22 @@ resource "null_resource" "dlt_pipeline_sql_patch_policy_id" {
     "libraries": [
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/sql/00_etl_dlt_bronze"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/sql/00_etl_dlt_bronze"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/utils/udfs"
+                "path": "/Repos/${each.key}/ISV-Summit/utils/udfs"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/sql/20_etl_dlt_gold"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/sql/20_etl_dlt_gold"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/sql/10_etl_dlt_silver"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/sql/10_etl_dlt_silver"
             }
         }
     ],
@@ -170,22 +170,22 @@ resource "databricks_pipeline" "dlt_pipeline_python" {
 
   library {
     notebook {
-      path = "/Repos/${each.key}/AWS-ISV-Summit/utils/udfs"
+      path = "/Repos/${each.key}/ISV-Summit/utils/udfs"
     }
   }
   library {
     notebook {
-      path = "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/00_etl_dlt_bronze"
+      path = "/Repos/${each.key}/ISV-Summit/dlt/python/00_etl_dlt_bronze"
     }
   }
   library {
     notebook {
-      path = "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/10_etl_dlt_silver"
+      path = "/Repos/${each.key}/ISV-Summit/dlt/python/10_etl_dlt_silver"
     }
   }
   library {
     notebook {
-      path = "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/20_etl_dlt_gold"
+      path = "/Repos/${each.key}/ISV-Summit/dlt/python/20_etl_dlt_gold"
     }
   }
 
@@ -256,22 +256,22 @@ resource "null_resource" "dlt_pipeline_python_patch_policy_id" {
     "libraries": [
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/00_etl_dlt_bronze"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/python/00_etl_dlt_bronze"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/utils/udfs"
+                "path": "/Repos/${each.key}/ISV-Summit/utils/udfs"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/20_etl_dlt_gold"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/python/20_etl_dlt_gold"
             }
         },
         {
             "notebook": {
-                "path": "/Repos/${each.key}/AWS-ISV-Summit/dlt/python/10_etl_dlt_silver"
+                "path": "/Repos/${each.key}/ISV-Summit/dlt/python/10_etl_dlt_silver"
             }
         }
     ],

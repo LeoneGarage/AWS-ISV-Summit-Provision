@@ -17,3 +17,8 @@ resource "databricks_dbfs_file" "incoming" {
   source = "${path.module}/../data/incoming/insurance_claims_incoming.csv"
   path   = "/mnt/fraud/insurance/incoming/insurance_claims_incoming.csv"
 }
+
+resource "databricks_dbfs_file" "instructions" {
+  source = "${path.module}/../Databricks_ISV_Summit_Workshop_Instructions.pdf"
+  path   = "/FileStore/Databricks_ISV_Summit_Workshop_Instructions.pdf"
+}
